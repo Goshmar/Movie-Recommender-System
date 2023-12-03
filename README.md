@@ -1,110 +1,49 @@
-# Practical Machine Learning and Deep Learning - Assignment 2 - Movie Recommender System
+# Practical Machine Learning and Deep Learning - Movie Recommender System
+
+_Georgii Budnik, g.budnik@innopolis.university
+BS21-AI-01_
 
 ## Task description
 
-A recommender system is a type of information filtering system that suggests items or content to users based on their interests, preferences, or past behavior. These systems are commonly used in various domains, such as e-commerce, entertainment, social media, and online content platforms.
+The task is to develop a recommendation system for films that will be able to select a set of recommendations for a given movie or user
 
-Your assignment is to create a recommender system of movies for users:
-* Your system should suggest some movies to the user based on user's gemographic information(age, gender, occupation, zip code) and favorite movies (list of movie ids).
-* Solve this task using a machine learning model. You may consider only one model: it will be enough.
-* Create a benchmark that would evaluate the quality of recommendations of your model. Look for commonly used metrics to evaluate a recommender system and use at least one metric.
-* Make a single report decribing data exploration, solution implementation, training process, and evaluation on the benchmark.
-* Explicitly state the benchmark scores of your systems.
+## Basic pipeline (commands):
 
-Submission should be a link to GitHub repository. It should be open repository, so that the instructors could assess it easily.
+1. On the basis of the laptop ```1_data_preparation.ipynb``` download the dataset (it happens in the laptop automatically) and process the data by receiving the generated data that lies in the ```data/interim``` folder
 
-## Data Description
+2. Launch one of the two or both laptops with the developed models (```2_SVD_implementation.ipynb```, ```3_Hybrid_SVD_implementation.ipynb```). Detailed versions of these scripts are located in the ```models``` folder
 
-In this assignment you will use [MovieLens 100K dataset](https://grouplens.org/datasets/movielens/100k/) consisting user ratings to movies.
+3. As soon as the models are ready to work, set your query from the laptop ```4_preparing_to_evaluation.ipynb``` and create the results of the work of the recommendation systems (ready-made program outputs are in the ```benchmark/data``` folder)
 
-**General information about the dataset:**
-* It consists of 100,000 ratings from 943 users on 1682 movies
-* Ratings are ranged from 1 to 5
-* Each user has rated at least 20 movies
-* It contains simple demographic info for the users (age, gender, occupation, zip code)
+4. In order to evaluate and compare the quality of the models, use the laptop ```5_evaluation.ipynb``` or the file ```benchmark/evaluate.py```
 
-**Detailed description of data files:**
+5. Also, for a more convenient launch of all "sections", the laptop ```6_overall_baseline.ipynb``` is presented
 
-| **File** | **Description** |
-| -------- | --------------- |
-| u.data | Full dataset of 100000 ratings by 943 users on 1682 items. Users and items are numbered consecutively from 1. The data is randomly ordered. This is a tab separated list of user id, item id, rating, and timestamp. The time stamps are unix seconds. |
-| u.info | The number of users, items, and ratings in the u data set |
-| u.item | Information about the items (movies). This is a tab separated list of movie id, movie title, release date, video release date, IMDB URL, and genres. The last 19 fields are genres and contain binary values. Movies can be of several genres at once. The movie ids are the ones used in u.data |
-| u.genre | List of genres. |
-| u.user | Demographic information about the users. This is a tab separated list of user id, age, gender, occupation, zip code. The user ids are the ones used in in u.data file. |
-| u.occupation | List of occupations. |
-| u1.base, u1.test, u2.base, u2.test, u3.base, u3.test, u4.base, u3.test, u5.base, u5.test | The data sets u1.base and u1.test through u5.base and u5.test are 80%/20% splits of the u data into training and test data. Each of u1, ..., u5 have disjoint test sets; this if for 5 fold cross validation (where you repeat your experiment with each training and test set and average the results). These data sets can be generated from u.data by mku.sh. |
-| ua.base, ua.test, ub.base, ub.test | The data sets ua.base, ua.test, ub.base, and ub.test split the u data into a training set and a test set with exactly 10 ratings per user in the test set. The sets ua.test and ub.test are disjoint. These data sets can be generated from u.data by mku.sh. |
-| allbut.pl | The script that generates training and test sets where all but n of a users ratings are in the training data |
-| mku.sh | A shell script to generate all the u data sets from u.data. |
+## Repository structure
 
-## Evaluation criterias
-
-The repository should have the following structure:
+Repository has the following structure:
 
 ```
-movie-recommender-system
-├── README.md               # The top-level README
+Movie-Recommender-System
+├── README.md               # Short info about the project
 │
 ├── data
-│   ├── external            # Data from third party sources
-│   ├── interim             # Intermediate data that has been transformed.
-│   └── raw                 # The original, immutable data
+│   ├── external            # Reference's data
+│   ├── interim             # Prepared/transformed data
+│   └── raw                 # The initially data
 │
-├── models                  # Trained and serialized models, final checkpoints
+├── models                  # Final checkpoints models
 │
-├── notebooks               #  Jupyter notebooks. Naming convention is a number (for ordering),
-│                               and a short delimited description, e.g.
-│                               "1.0-initial-data-exporation.ipynb"            
+├── notebooks               #  Jupyter notebooks           
 │ 
-├── references              # Data dictionaries, manuals, and all other explanatory materials.
+├── references              # Key explanatory papers
 │
 ├── reports
 │   ├── figures             # Generated graphics and figures to be used in reporting
-│   └── final_report.pdf    # Report containing data exploration, solution exploration, training process, and evaluation
+│   └── final_report.pdf    # Final report about the work
 │
 └── benchmark
-    ├── data                # dataset used for evaluation 
+    ├── data                # The result of the work done 
     └── evaluate.py         # script that performs evaluation of the given model
 ```
-
-
-In the top `README.md` file put your name, email and group number.
-
-In the `reports` directory create a report about your work. In the report, describe in details the implementation of your system. Mention its advantages and disadvantages.
-
-### Expected Report Structure
-
-```
-# Introduction
-...
-# Data analysis
-...
-# Model Implementation
-...
-# Model Advantages and Disadvantages
-...
-# Training Process
-...
-# Evaluation
-...
-# Results
-...
-```
-
-In the `notebooks` directory put at least two notebooks. **First notebook** should contain your initial data exploration and basic ideas behind data preprocessing. **Second notebook** should contain information about final solution training and visualization.
-
-## Grading criterias
-
-Full assignment without any problems is said to be the `100%` solution.
-
-| Criteria | Weight (%) | Comment |
-| ---- | ----- | ----- |
-| Structure and code quality | 30 | Code quality, structure, comments, clean repo, commit history, reproducibility (manual seeding) |
-| Visualization, notebooks quality | 10 | Jupyter notebooks, visualizations |
-| Solution building | 40 |  Implementation description, references, final report structure |
-| Final score, evaluation  | 20 | Evaluation function, final score, quality of results |
-
-If **PMLDL Course Team** will have any questions about your assignment or your work fails to show your results you will be called solution defence procedure. 
-
 
